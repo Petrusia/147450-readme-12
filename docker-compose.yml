@@ -1,34 +1,51 @@
 version: '3.9'
 
-networks:
+networks: 
   blog:
     name: blog
 
 services:
-  app:
-    build: .
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: nginx.dockerfile
+    container_name: nginx
+    depends_on:
+      - php
+      - mysql
     ports:
       - 80:80
-    container_name: app
-    depends_on:
-      - mysql
+      - 443:443
     volumes:
-      - .:/var/www/html
+      - . :/var/www/html
+    networks:
+      - blog
+  
+
+  php:
+    build:
+      context: ./docker
+      dockerfile: php.dockerfile
+    container_name: php
+    volumes:
+      - . :/var/www/html
     networks:
       - blog
 
   mysql:
     image: mysql:5.7.33
-    container_name: data
+    container_name: mysql
     ports:
       - 3306:3306
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./docker/mysql:/var/lib/mysql
     environment:
       MYSQL_DATABASE: blogdb
       MYSQL_USER: blog
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
-    networks:
+    networks: 
       - blog
+
+
 
