@@ -342,7 +342,7 @@ $post_data = [
                     <div class="post__main">
                         <!--содержимое для поста-цитаты-->
                         <?php switch ($post['type']):
-                            case "post-quote": ?>
+                            case 'post-quote': ?>
                                 <blockquote>
                                     <p>
                                         <?= $post['description']; ?>
@@ -351,7 +351,7 @@ $post_data = [
                                 </blockquote>
 
                                 <?php break;
-                            case "post-link": ?>
+                            case 'post-link': ?>
                                 <!--содержимое для поста-ссылки-->
                                 <div class="post-link__wrapper">
                                     <a class="post-link__external" href="http://" title="Перейти по ссылке">
@@ -369,7 +369,7 @@ $post_data = [
                                 </div>
 
                                 <?php break;
-                            case "post-photo": ?>
+                            case 'post-photo': ?>
                                 <!--содержимое для поста-фото-->
                                 <div class="post-photo__image-wrapper">
                                     <img src="img/<?= $post['description'] ?>" alt="Фото от пользователя" width="360"
@@ -377,7 +377,7 @@ $post_data = [
                                 </div>
 
                                 <?php break;
-                            case "post-video": ?>
+                            case 'post-video': ?>
                                 <!--содержимое для поста-видео-->
                                 <div class="post-video__block">
                                     <div class="post-video__preview">
@@ -392,7 +392,7 @@ $post_data = [
                                     </a>
                                 </div>
                                 <?php break;
-                            case "post-text": ?>
+                            case 'post-text': ?>
                                 <!--содержимое для поста-текста-->
                                 <p><?= $post['description'] ?></p>
                                 <?php break;
