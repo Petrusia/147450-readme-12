@@ -1,46 +1,7 @@
 <?php
-$is_auth = rand(0, 1);
 
-$user_name = 'Petras'; // укажите здесь ваше имя
-
-// Таблица данных для показа карточки одного поста
-$post_data = [
-    [
-        'title' => 'Цитата',
-        'type' => 'post-quote',
-        'description' => 'Мы в жизни любим только раз, а после ищем лишь похожих',
-        'user_name' => 'Лариса',
-        'avatar' => 'userpic-larisa-small.jpg',
-    ],
-    [
-        'title' => 'Игра престолов',
-        'type' => 'post-text',
-        'description' => 'Не могу дождаться начала финального сезона своего любимого сериала!',
-        'user_name' => 'Владик',
-        'avatar' => 'userpic.jpg',
-    ],
-    [
-        'title' => 'Наконец, обработал фотки!',
-        'type' => 'post-photo',
-        'description' => 'rock-medium.jpg',
-        'user_name' => 'Виктор',
-        'avatar' => 'userpic-mark.jpg',
-    ],
-    [
-        'title' => 'Моя мечта',
-        'type' => 'post-photo',
-        'description' => 'coast-medium.jpg',
-        'user_name' => 'Лариса',
-        'avatar' => 'userpic-larisa-small.jpg',
-    ],
-    [
-        'title' => 'Лучшие курсы',
-        'type' => 'post-link',
-        'description' => 'www.htmlacademy.ru',
-        'user_name' => 'Владик',
-        'avatar' => 'userpic.jpg',
-    ],
-];
+require_once(dirname(__FILE__) . '/helpers/truncate.php');
+require_once(dirname(__FILE__) . '/helpers/data.php');
 
 ?>
 
@@ -344,9 +305,7 @@ $post_data = [
                         <?php switch ($post['type']):
                             case 'post-quote': ?>
                                 <blockquote>
-                                    <p>
-                                        <?= $post['description']; ?>
-                                    </p>
+                                <?= truncate($post['description']) ?>
                                     <cite>Неизвестный Автор</cite>
                                 </blockquote>
 
@@ -394,7 +353,7 @@ $post_data = [
                                 <?php break;
                             case 'post-text': ?>
                                 <!--содержимое для поста-текста-->
-                                <p><?= $post['description'] ?></p>
+                                <?= truncate($post['description']) ?>
                                 <?php break;
                         endswitch; ?>
 
