@@ -7,7 +7,7 @@ function truncate($description, $length = 300)
 {
     $description = trim($description);
 
-    if (strlen($description) <= $length) {
+    if (mb_strlen($description) <= $length) {
         return "<p>$description</p>";
     }
 
@@ -21,7 +21,7 @@ function truncate($description, $length = 300)
 
     //  в цикле последовательно считаю длину каждого слова и пробела
     foreach ($description as $key => $word) {
-        $count += strlen($word) + 1; // + 1 это пробел
+        $count += mb_strlen($word) + 1; // + 1 это пробел
 
         /* останавливаю  цикл, когда суммарная длина символов
          в посчитанных словах начинает превышать ограничение */
@@ -36,7 +36,7 @@ function truncate($description, $length = 300)
 }
     //  другая версия
 
-    // $description = substr($description, 0, $lenght);
+    // $description = substr($description, 0,  $length);
     // /*strrpos — Возвращает позицию последнего вхождения подстроки в строке
     //  у нас это пробел */
     // $position = strrpos($description, ' ');
