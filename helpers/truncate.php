@@ -3,11 +3,11 @@
 /* функция, которая обрезает текстовое содержимое
 если оно превышает заданное число символов */
 
-function truncate($description, $lenght = 300)
+function truncate($description, $length = 300)
 {
     $description = trim($description);
 
-    if (strlen($description) <= $lenght) {
+    if (strlen($description) <= $length) {
         return "<p>$description</p>";
     }
 
@@ -25,7 +25,7 @@ function truncate($description, $lenght = 300)
 
         /* останавливаю  цикл, когда суммарная длина символов
          в посчитанных словах начинает превышать ограничение */
-        if ($count > $lenght) {
+        if ($count > $length) {
             // обрезаю до приемлемой длины
             $abbreviation = array_slice($description, 0, $key);
             //  сложил  отдельные слова обратно в строку
@@ -33,7 +33,7 @@ function truncate($description, $lenght = 300)
             return "<p> $description $append </p> $read_more";
         }
     }
-
+}
     //  другая версия
 
     // $description = substr($description, 0, $lenght);
@@ -42,6 +42,6 @@ function truncate($description, $lenght = 300)
     // $position = strrpos($description, ' ');
     // $description = substr($description, 0, $position);
     // return "<p> $description $append </p> $read_more";
-}
+
 
 
