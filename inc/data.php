@@ -1,13 +1,10 @@
 <?php
-/** @var TYPE_NAME $is_auth */
 $is_auth = rand(0, 1);
-/** @var TYPE_NAME $user_name */
 $user_name = 'Petras'; // укажите здесь ваше имя
-/** @var TYPE_NAME $title */
 $title = 'Популярное';
 
 // Таблица данных для показа карточки одного поста
-/** @var TYPE_NAME $post_data */
+
 $post_data = [
     [
         'title' => 'Полезный пост про Байкал',

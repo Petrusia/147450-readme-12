@@ -189,4 +189,5 @@
             </article>
         <?php endforeach; ?>
     </div>
+</div>
 
