@@ -31,7 +31,7 @@ function is_date_valid(string $date): bool
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt(mysqli $link, string $sql, $data = []): mysqli_stmt
+function db_get_prepare_stmt(mysqli $link, string $sql, array $data = []): mysqli_stmt
 {
     $stmt = mysqli_prepare($link, $sql);
 
@@ -155,7 +155,7 @@ function include_template(string $name, array $data = []): string
  *
  * @return string Ошибку если валидация не прошла
  */
-function check_youtube_url($url)
+function check_youtube_url(string $url)
 {
     $id = extract_youtube_id($url);
 
@@ -185,7 +185,7 @@ function check_youtube_url($url)
  * @param string $youtube_url Ссылка на youtube видео
  * @return string
  */
-function embed_youtube_video($youtube_url)
+function embed_youtube_video(string $youtube_url): string
 {
     $res = "";
     $id = extract_youtube_id($youtube_url);
@@ -203,7 +203,7 @@ function embed_youtube_video($youtube_url)
  * @param string $youtube_url Ссылка на youtube видео
  * @return string
  */
-function embed_youtube_cover($youtube_url)
+function embed_youtube_cover(string $youtube_url)
 {
     $res = "";
     $id = extract_youtube_id($youtube_url);
@@ -221,7 +221,7 @@ function embed_youtube_cover($youtube_url)
  * @param string $youtube_url Ссылка на youtube видео
  * @return array
  */
-function extract_youtube_id($youtube_url)
+function extract_youtube_id(string $youtube_url)
 {
     $id = false;
 
