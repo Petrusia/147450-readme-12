@@ -30,7 +30,7 @@ function is_date_valid(string $date): bool
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($link, $sql, $data = [])
+function db_get_prepare_stmt(mysqli $link, string $sql, $data = []): mysqli_stmt
 {
     $stmt = mysqli_prepare($link, $sql);
 
@@ -98,7 +98,7 @@ function db_get_prepare_stmt($link, $sql, $data = [])
  * @param string $two Форма множественного числа для 2, 3, 4: яблока, часа, минуты
  * @param string $many Форма множественного числа для остальных чисел
  *
- * @return string Рассчитанная форма множественнго числа
+ * @return string Рассчитанная форма множественного числа
  */
 function get_noun_plural_form(int $number, string $one, string $two, string $many): string
 {
@@ -130,7 +130,7 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template($name, array $data = [])
+function include_template( string $name, array $data = []): string
 {
     $name = 'templates/' . $name;
     $result = '';

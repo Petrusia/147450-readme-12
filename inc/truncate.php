@@ -1,9 +1,13 @@
 <?php
 
-// функция, которая обрезает текстовое содержимое
-//если оно превышает заданное число символов
+/**
+ * функция, которая обрезает текстовое содержимое если оно превышает заданное число символов
+ * @param string $description текстовое содержимое
+ * @param integer $length заданное число символов
+ * @return string Возвращает обрезанное  текстовое содержимое
+ */
 
-function truncate($description, $length = 300): string
+function truncate(string $description, int $length = 300): string
 {
     //  выпилил  все html теги из текста
     $description = htmlspecialchars(trim($description));
@@ -13,12 +17,10 @@ function truncate($description, $length = 300): string
         return sprintf('<p>%s</p>', $description);
     }
 
-
     $append = "&hellip;";
     $read_more = "<a class='post-text__more-link' href='#'>Читать далее</a>";
     $count = 0;
     $content = ' ';
-
 
     // разбил текст на отдельные слова (по пробелам)
     $description = explode(' ', $description);
@@ -26,12 +28,12 @@ function truncate($description, $length = 300): string
     //  в цикле последовательно считаю длину каждого слова и пробела
     foreach ($description as $key => $word) {
         $count += mb_strlen($word) + 1; // + 1 это пробел
-
         //остановил  цикл, когда суммарная длина символов
         // в посчитанных словах начинает превышать ограничение
         if ($count <= $length) {
             continue;
         }
+
         // к ключу я добавил единицу,
         //потому что массив отсчитывает от 0, а слова - от 1.
         $key = $key + 1;
