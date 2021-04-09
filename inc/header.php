@@ -123,7 +123,8 @@
         </form>
         <div class="header__nav-wrapper">
             <!-- здесь должен быть PHP код, который показывает следующий тег по условию -->
-            <?php if ($is_auth) : ?>
+            <?php
+            if ($is_auth) : ?>
                 <nav class="header__nav">
                     <ul class="header__my-nav">
                         <li class="header__my-page header__my-page--popular">
@@ -195,7 +196,8 @@
                         </li>
                     </ul>
                 </nav>
-            <?php endif; ?>
+            <?php
+            endif; ?>
         </div>
     </div>
 </header>

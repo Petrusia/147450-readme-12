@@ -85,21 +85,24 @@
         </div>
     </div>
     <div class="popular__posts">
-        <?php foreach ($post_data as $post): ?>
+        <?php
+        foreach ($post_data as $post): ?>
             <article class="popular__post post <?= $post['type']; ?>">
                 <header class="post__header">
                     <h2><?= $post['title']; ?></h2>
                 </header>
                 <div class="post__main">
                     <!--содержимое для поста-цитаты-->
-                    <?php switch ($post['type']):
+                    <?php
+                    switch ($post['type']):
                         case 'post-quote': ?>
                             <blockquote>
                                 <?= truncate($post['description']) ?>
                                 <cite>Неизвестный Автор</cite>
                             </blockquote>
 
-                            <?php break;
+                            <?php
+                            break;
                         case 'post-link': ?>
                             <!--содержимое для поста-ссылки-->
                             <div class="post-link__wrapper">
@@ -117,7 +120,8 @@
                                 </a>
                             </div>
 
-                            <?php break;
+                            <?php
+                            break;
                         case 'post-photo': ?>
                             <!--содержимое для поста-фото-->
                             <div class="post-photo__image-wrapper">
@@ -125,7 +129,8 @@
                                      height="240">
                             </div>
 
-                            <?php break;
+                            <?php
+                            break;
                         case 'post-video': ?>
                             <!--содержимое для поста-видео-->
                             <div class="post-video__block">
@@ -140,11 +145,13 @@
                                     <span class="visually-hidden">Запустить проигрыватель</span>
                                 </a>
                             </div>
-                            <?php break;
+                            <?php
+                            break;
                         case 'post-text': ?>
                             <!--содержимое для поста-текста-->
                             <?= truncate($post['description']) ?>
-                            <?php break;
+                            <?php
+                            break;
                     endswitch; ?>
 
                     <footer class="post__footer">
@@ -187,7 +194,8 @@
                     </footer>
                 </div>
             </article>
-        <?php endforeach; ?>
+        <?php
+        endforeach; ?>
     </div>
 </div>
 

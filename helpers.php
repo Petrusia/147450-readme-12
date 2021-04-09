@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
@@ -130,7 +131,7 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template( string $name, array $data = []): string
+function include_template(string $name, array $data = []): string
 {
     $name = 'templates/' . $name;
     $result = '';
@@ -158,8 +159,11 @@ function check_youtube_url($url)
 {
     $id = extract_youtube_id($url);
 
-    set_error_handler(function () {
-    }, E_WARNING);
+    set_error_handler(
+        function () {
+        },
+        E_WARNING
+    );
     $headers = get_headers('https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v=' . $id);
     restore_error_handler();
 
