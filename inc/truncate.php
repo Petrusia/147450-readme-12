@@ -5,7 +5,8 @@
 
 function truncate($description, $length = 300): string
 {
-    $description = trim($description);
+    //  выпилил  все html теги из текста
+    $description = htmlspecialchars(trim($description));
 
     if (mb_strlen($description) <= $length) {
         // return "<p>{$description}</p>";
