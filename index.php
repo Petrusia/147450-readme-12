@@ -1,6 +1,4 @@
 <?php
-
-require_once(dirname(__FILE__) . '/inc/truncate.php');
 require_once(dirname(__FILE__) . '/inc/data.php');
 require_once(dirname(__FILE__) . '/helpers.php');
 
