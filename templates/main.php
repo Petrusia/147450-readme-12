@@ -86,8 +86,8 @@
     </div>
     <div class="popular__posts">
         <?php
-        foreach ($post_data as $post_id => $post):
-            $post_created_at = generate_random_date($post_id);
+        foreach ($post_data as $postID => $post):
+            $postCreatedAt = generate_random_date($postID);
             ?>
 
             <article class="popular__post post <?= $post['type']; ?>">
@@ -167,7 +167,9 @@
                                 </div>
                                 <div class="post__info">
                                     <b class="post__author-name"><?= $post['user_name'] ?></b>
-                                    <time class="post__time" datetime="">дата</time>
+                                    <time class="post__time" datetime="<?= $postCreatedAt; ?>"
+                                          title="<?= date("Y-m-d H:i", strtotime($postCreatedAt)) ?>">
+                                        <?= getDateDiff($postCreatedAt); ?></time>
                                 </div>
                             </a>
                         </div>
