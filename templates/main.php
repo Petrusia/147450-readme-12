@@ -86,7 +86,10 @@
     </div>
     <div class="popular__posts">
         <?php
-        foreach ($post_data as $post): ?>
+        foreach ($post_data as $post_id => $post):
+            $post_created_at = generate_random_date($post_id);
+            ?>
+
             <article class="popular__post post <?= $post['type']; ?>">
                 <header class="post__header">
                     <h2><?= $post['title']; ?></h2>
