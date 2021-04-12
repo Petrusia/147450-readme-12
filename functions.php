@@ -32,21 +32,18 @@ function truncate(
 }
 
 /**
- *Показывает дату публикации поста в относительном формате,
- * удобном для пользователя. Т.е. вместо конкретной даты и времени
- * показывает эту же дату в виде количества прошедших с данного момента
- * минут, часов, дней, недель или месяцев.
- * @param string $postCreatedData время создания поста
- * @return string возвращает дату в виде количества прошедших с
+ *Показывает дату публикации поста в относительном формате, удобном для пользователя.
+ * 1. $postCreatedDate время создания поста
+ * 2. возвращает дату в виде количества прошедших с
  * данного момента минут, часов, дней, недель или месяцев.
  */
 
-function getDateDiff(string $postCreatedData): string
+function getDateDiff(string $postCreatedDate): string
 {
     $dateNow = date_create();
-    $datePostCreated = date_create($postCreatedData);
+    $datePostCreated = date_create($postCreatedDate);
     //считает разницу с текущим временем
-    // date_diff функция возвращает объект DateInterval
+    /** @var DateInterval $dateDifference */
     $dateDifference = date_diff($datePostCreated, $dateNow);
 
     // https://www.php.net/manual/ru/class.dateinterval.php
@@ -57,23 +54,25 @@ function getDateDiff(string $postCreatedData): string
     $weeks = floor($days / 7);
     $hours = $dateDifference->h;// Количество часов int
     $minutes = $dateDifference ->i;// Количество минут int
+    $date = ''; //возвращаемое значение
 
     // определяет, в какой из диапазонов она попадает, начиная от большого к меньшему
     if ($months) {
-        return  $months . ' ' . get_noun_plural_form($months, 'месяц', 'месяца', 'месяцев') . ' назад';
+        $date = sprintf("%s %s назад", $months, get_noun_plural_form($months, 'месяц', 'месяца', 'месяцев'));
     }
     if ($weeks) {
-        return  $weeks . ' ' . get_noun_plural_form($weeks, 'неделя', 'недели', 'недель') . ' назад';
+        $date = sprintf("%s %s назад", $weeks, get_noun_plural_form($weeks, 'неделя', 'недели', 'недель'));
     }
     if ($days) {
-        return  $days . ' ' . get_noun_plural_form($days, 'день', 'дня', 'дней') . ' назад';
+        $date = sprintf("%s %s назад", $days, get_noun_plural_form($days, 'день', 'дня', 'дней'));
     }
     if ($hours) {
-        return  $hours . ' ' . get_noun_plural_form($hours, 'час', 'часа', 'часов') . ' назад';
+        $date = sprintf("%s %s назад", $hours, get_noun_plural_form($hours, 'час', 'часа', 'часов'));
     }
     if ($minutes) {
-        return  $minutes . ' ' . get_noun_plural_form($minutes, 'минута', 'минуты', 'минут') . ' назад';
+        $date = sprintf("%s %s назад", $minutes, get_noun_plural_form($minutes, 'минута', 'минуты', 'минут'));
     }
+    return $date;
 }
 
 
