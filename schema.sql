@@ -1,4 +1,4 @@
-CREATE TABLE user
+CREATE TABLE IF NOT EXISTS user
 (
     id                INT AUTO_INCREMENT PRIMARY KEY,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -8,11 +8,18 @@ CREATE TABLE user
     avatar_url        TEXT
 );
 
-CREATE TABLE post
+CREATE TABLE IF NOT EXISTS content_type
+(
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    type_name  VARCHAR(128) NOT NULL UNIQUE,
+    class_name VARCHAR(128) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS post
 (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     creation_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    title           TEXT,
+    title           VARCHAR(128),
     content         TEXT,
     quote_author    VARCHAR(128),
     image_url       TEXT,
@@ -21,16 +28,17 @@ CREATE TABLE post
     views_number    INT,
     user_id         INT,
     content_type_id INT,
-    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (user_id) REFERENCES user (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     FOREIGN KEY (content_type_id) REFERENCES content_type (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
-CREATE
-INDEX title ON post (title);
-CREATE
-INDEX content ON post (content);
 
-CREATE TABLE comment
+
+CREATE TABLE IF NOT EXISTS comment
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     comment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -41,19 +49,17 @@ CREATE TABLE comment
     FOREIGN KEY (post_id) REFERENCES post (id)
 );
 
-CREATE
-INDEX comment ON comment (content);
 
-CREATE TABLE likes
+CREATE TABLE IF NOT EXISTS likes
 (
     id      INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    post_id INT
+    post_id INT,
         FOREIGN KEY (user_id) REFERENCES user (id),
     FOREIGN KEY (post_id) REFERENCES post (id)
 );
 
-CREATE TABLE subscription
+CREATE TABLE IF NOT EXISTS subscription
 (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     follower_id INT,
@@ -62,7 +68,7 @@ CREATE TABLE subscription
     FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
-CREATE TABLE message
+CREATE TABLE IF NOT EXISTS message
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     message_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -73,16 +79,11 @@ CREATE TABLE message
     FOREIGN KEY (recipient_id) REFERENCES user (id)
 );
 
-CREATE TABLE hashtag
+CREATE TABLE IF NOT EXISTS hashtag
 (
     id   INT AUTO_INCREMENT PRIMARY KEY,
     name varchar(128) UNIQUE
 );
 
-CREATE TABLE content_type
-(
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    type_name  VARCHAR(128) NOT NULL UNIQUE,
-    class_name VARCHAR(128) NOT NULL UNIQUE
-);
+
 
