@@ -168,7 +168,7 @@
                                 <div class="post__info">
                                     <b class="post__author-name"><?= $post['user_name'] ?></b>
                                     <time class="post__time" datetime="<?= $postCreatedAt ?>"
-                                          title="<?= date("Y-m-d H:i", strtotime($postCreatedAt)) ?>">
+                                          title="<?= date('Y-m-d H:i', strtotime($postCreatedAt)) ?>">
                                         <?= getDateDiff($postCreatedAt) ?></time>
                                 </div>
                             </a>

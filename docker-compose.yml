@@ -1,7 +1,7 @@
 version: '3.9'
 
-networks: 
-  blog:
+networks:
+  readme:
     name: blog
 
 services:
@@ -19,8 +19,8 @@ services:
     volumes:
       - . :/var/www/html
     networks:
-      - blog
-  
+      - readme
+
 
   php:
     build:
@@ -30,7 +30,7 @@ services:
     volumes:
       - . :/var/www/html
     networks:
-      - blog
+      - readme
 
   mysql:
     image: mysql:5.7.33
@@ -40,12 +40,12 @@ services:
     volumes:
       - ./docker/mysql:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: blogdb
-      MYSQL_USER: blog
+      MYSQL_DATABASE: readmedb
+      MYSQL_USER: readme
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
-    networks: 
-      - blog
+    networks:
+      - readme
 
 
 
