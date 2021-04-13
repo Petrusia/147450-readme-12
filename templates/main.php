@@ -86,8 +86,8 @@
     </div>
     <div class="popular__posts">
         <?php
-        foreach ($post_data as $post_id => $post):
-            $post_created_at = generate_random_date($post_id);
+        foreach ($post_data as $postId => $post):
+            $postCreatedAt = generate_random_date($postId);
             ?>
 
             <article class="popular__post post <?= $post['type']; ?>">
@@ -116,10 +116,10 @@
                                                  alt="Иконка">
                                         </div>
                                         <div class="post-link__info">
-                                            <h3><?= $post['title']; ?></h3>
+                                            <h3><?= $post['title'] ?></h3>
                                         </div>
                                     </div>
-                                    <span><?= $post['description']; ?></span>
+                                    <span><?= $post['description'] ?></span>
                                 </a>
                             </div>
 
@@ -138,7 +138,7 @@
                             <!--содержимое для поста-видео-->
                             <div class="post-video__block">
                                 <div class="post-video__preview">
-                                    <?= embed_youtube_cover($post['description']); ?>
+                                    <?= embed_youtube_cover($post['description']) ?>
                                     <img src="img/coast-medium.jpg" alt="Превью к видео" width="360" height="188">
                                 </div>
                                 <a href="post-details.html" class="post-video__play-big button">
@@ -167,7 +167,9 @@
                                 </div>
                                 <div class="post__info">
                                     <b class="post__author-name"><?= $post['user_name'] ?></b>
-                                    <time class="post__time" datetime="">дата</time>
+                                    <time class="post__time" datetime="<?= $postCreatedAt ?>"
+                                          title="<?= date("Y-m-d H:i", strtotime($postCreatedAt)) ?>">
+                                        <?= getDateDiff($postCreatedAt) ?></time>
                                 </div>
                             </a>
                         </div>
