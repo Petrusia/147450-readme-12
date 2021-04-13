@@ -10,18 +10,21 @@ CREATE TABLE user
 
 CREATE TABLE post
 (
-    id            INT AUTO_INCREMENT PRIMARY KEY,
-    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    title         TEXT,
-    content       TEXT,
-    quote_author  VARCHAR(128),
-    image_url     TEXT,
-    video_url     TEXT,
-    link_url      TEXT,
-    views_number  INT,
-    user_id       INT,
-    type_id       INT
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    creation_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    title           TEXT,
+    content         TEXT,
+    quote_author    VARCHAR(128),
+    image_url       TEXT,
+    video_url       TEXT,
+    link_url        TEXT,
+    views_number    INT,
+    user_id         INT,
+    content_type_id INT
 );
+
+CREATE INDEX title ON post (title);
+CREATE INDEX content ON post (content);
 
 CREATE TABLE comment
 (
@@ -31,6 +34,8 @@ CREATE TABLE comment
     user_id      INT,
     post_id      INT
 );
+
+CREATE INDEX comment ON comment (content);
 
 CREATE TABLE likes
 (
@@ -68,8 +73,3 @@ CREATE TABLE content_type
     class_name VARCHAR(128) UNIQUE
 );
 
-CREATE TABLE user_role
-(
-    user_role INT,
-    user_id   INT
-);
