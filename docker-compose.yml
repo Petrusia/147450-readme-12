@@ -39,11 +39,13 @@ services:
       - 3306:3306
     volumes:
       - ./docker/mysql:/var/lib/mysql
+    command: [ '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     environment:
       MYSQL_DATABASE: readmedb
       MYSQL_USER: readme
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
+    restart: always
     networks:
       - readme
 

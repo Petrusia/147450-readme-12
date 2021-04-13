@@ -100,6 +100,6 @@ CREATE TABLE IF NOT EXISTS hashtag
     id   INT AUTO_INCREMENT PRIMARY KEY,
     name varchar(128) UNIQUE
 );
-
-
+CREATE FULLTEXT INDEX post_title_index ON post(title); # --https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html
+CREATE FULLTEXT INDEX comment_index ON comment(content); # --https://www.mysqltutorial.org/activating-full-text-searching.aspx/
 
