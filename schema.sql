@@ -45,8 +45,12 @@ CREATE TABLE IF NOT EXISTS comment
     content      TEXT,
     user_id      INT,
     post_id      INT,
-    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (user_id) REFERENCES user (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     FOREIGN KEY (post_id) REFERENCES post (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 
@@ -55,8 +59,12 @@ CREATE TABLE IF NOT EXISTS likes
     id      INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     post_id INT,
-        FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (user_id) REFERENCES user (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     FOREIGN KEY (post_id) REFERENCES post (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS subscription
@@ -64,8 +72,12 @@ CREATE TABLE IF NOT EXISTS subscription
     id          INT AUTO_INCREMENT PRIMARY KEY,
     follower_id INT,
     user_id     INT,
-    FOREIGN KEY (follower_id) REFERENCES user (id),
+    FOREIGN KEY (follower_id) REFERENCES user (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS message
@@ -75,8 +87,12 @@ CREATE TABLE IF NOT EXISTS message
     message      TEXT,
     sender_id    INT,
     recipient_id INT,
-    FOREIGN KEY (sender_id) REFERENCES user (id),
+    FOREIGN KEY (sender_id) REFERENCES user (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     FOREIGN KEY (recipient_id) REFERENCES user (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS hashtag
