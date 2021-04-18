@@ -41,56 +41,26 @@
                         <span>Все</span>
                     </a>
                 </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--photo button" href="#">
-                        <span class="visually-hidden">Фото</span>
-                        <svg class="filters__icon" width="22" height="18">
-                            <use xlink:href="#icon-filter-photo"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--video button" href="#">
-                        <span class="visually-hidden">Видео</span>
-                        <svg class="filters__icon" width="24" height="16">
-                            <use xlink:href="#icon-filter-video"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--text button" href="#">
-                        <span class="visually-hidden">Текст</span>
-                        <svg class="filters__icon" width="20" height="21">
-                            <use xlink:href="#icon-filter-text"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--quote button" href="#">
-                        <span class="visually-hidden">Цитата</span>
-                        <svg class="filters__icon" width="21" height="20">
-                            <use xlink:href="#icon-filter-quote"></use>
-                        </svg>
-                    </a>
-                </li>
-                <li class="popular__filters-item filters__item">
-                    <a class="filters__button filters__button--link button" href="#">
-                        <span class="visually-hidden">Ссылка</span>
-                        <svg class="filters__icon" width="21" height="18">
-                            <use xlink:href="#icon-filter-link"></use>
-                        </svg>
-                    </a>
-                </li>
+
+                <?php
+                foreach ($contentTypes as $type): ?>
+                    <li class="popular__filters-item filters__item">
+                        <a class="filters__button filters__button--<?= $type['type'] ?> button" href="#">
+                            <span class="visually-hidden"><?= $type['name'] ?></span>
+                            <svg class="filters__icon" width="22" height="18">
+                                <use xlink:href="#icon-filter-<?= $type['type'] ?>"></use>
+                            </svg>
+                        </a>
+                    </li>
+                <?php
+                endforeach; ?>
             </ul>
         </div>
     </div>
     <div class="popular__posts">
         <?php
-        foreach ($post_data as $postId => $post):
-            $postCreatedAt = generate_random_date($postId);
-            ?>
-
-            <article class="popular__post post <?= $post['type']; ?>">
+        foreach ($posts as $postId => $post): ?>
+            <article class="popular__post post post-<?= $post['type']; ?>">
                 <header class="post__header">
                     <h2><?= $post['title']; ?></h2>
                 </header>
@@ -98,7 +68,7 @@
                     <!--содержимое для поста-цитаты-->
                     <?php
                     switch ($post['type']):
-                        case 'post-quote': ?>
+                        case 'quote': ?>
                             <blockquote>
                                 <?= truncate($post['description']) ?>
                                 <cite>Неизвестный Автор</cite>
@@ -106,13 +76,14 @@
 
                             <?php
                             break;
-                        case 'post-link': ?>
+                        case 'link': ?>
                             <!--содержимое для поста-ссылки-->
                             <div class="post-link__wrapper">
-                                <a class="post-link__external" href="http://" title="Перейти по ссылке">
+                                <a class="post-link__external" href="<?= $post['link_url'] ?>"
+                                   title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
                                         <div class="post-link__icon-wrapper">
-                                            <img src="https://www.google.com/s2/favicons?domain=vitadental.ru"
+                                            <img src="/img/favicons-link.png"
                                                  alt="Иконка">
                                         </div>
                                         <div class="post-link__info">
@@ -125,16 +96,16 @@
 
                             <?php
                             break;
-                        case 'post-photo': ?>
+                        case 'photo': ?>
                             <!--содержимое для поста-фото-->
                             <div class="post-photo__image-wrapper">
-                                <img src="img/<?= $post['description'] ?>" alt="Фото от пользователя" width="360"
+                                <img src="img/<?= $post['image_url'] ?>" alt="Фото от пользователя" width="360"
                                      height="240">
                             </div>
 
                             <?php
                             break;
-                        case 'post-video': ?>
+                        case 'video': ?>
                             <!--содержимое для поста-видео-->
                             <div class="post-video__block">
                                 <div class="post-video__preview">
@@ -150,7 +121,7 @@
                             </div>
                             <?php
                             break;
-                        case 'post-text': ?>
+                        case 'text': ?>
                             <!--содержимое для поста-текста-->
                             <?= truncate($post['description']) ?>
                             <?php
@@ -167,9 +138,9 @@
                                 </div>
                                 <div class="post__info">
                                     <b class="post__author-name"><?= $post['user_name'] ?></b>
-                                    <time class="post__time" datetime="<?= $postCreatedAt ?>"
-                                          title="<?= date('Y-m-d H:i', strtotime($postCreatedAt)) ?>">
-                                        <?= getDateDiff($postCreatedAt) ?></time>
+                                    <time class="post__time" datetime="<?= $post['created_at'] ?>"
+                                          title="<?= date('Y-m-d H:i', strtotime($post['created_at'])) ?>">
+                                        <?= getDateDiff($post['created_at']) ?></time>
                                 </div>
                             </a>
                         </div>
@@ -183,7 +154,7 @@
                                          height="17">
                                         <use xlink:href="#icon-heart-active"></use>
                                     </svg>
-                                    <span>0</span>
+                                    <span><?= $post['views_number'] ?></span>
                                     <span class="visually-hidden">количество лайков</span>
                                 </a>
                                 <a class="post__indicator post__indicator--comments button" href="#"
