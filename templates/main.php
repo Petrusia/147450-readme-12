@@ -137,7 +137,7 @@
                                          alt="Аватар пользователя">
                                 </div>
                                 <div class="post__info">
-                                    <b class="post__author-name"><?= $post['user_name'] ?></b>
+                                    <b class="post__author-name"><?= $post['login'] ?></b>
                                     <time class="post__time" datetime="<?= $post['created_at'] ?>"
                                           title="<?= date('Y-m-d H:i', strtotime($post['created_at'])) ?>">
                                         <?= getDateDiff($post['created_at']) ?></time>

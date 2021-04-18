@@ -17,6 +17,7 @@ $contentTypes = getContentTypes($connection);
 $posts = getPosts($connection);
 // Используйте эти данные для показа списка постов
 // и списка типов контента на главной странице.
+
 $mainTemplate = include_template('main.php', ['contentTypes' => $contentTypes, 'posts' => $posts]);
 
 $layoutTemplate = include_template(
