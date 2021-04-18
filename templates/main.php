@@ -79,7 +79,7 @@
                         case 'link': ?>
                             <!--содержимое для поста-ссылки-->
                             <div class="post-link__wrapper">
-                                <a class="post-link__external" href="<?= $post['link_url'] ?>"
+                                <a class="post-link__external" href="https://<?= $post['link_url'] ?>"
                                    title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
                                         <div class="post-link__icon-wrapper">
