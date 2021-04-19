@@ -27,7 +27,12 @@ function truncate(
         if (mb_strlen($words) < $length) {
             continue;
         }
-        return sprintf('<p>%s%s</p>%s', $words, "&hellip;", "<a class='post-text__more-link' href='#'>Читать далее</a>");
+        return sprintf(
+            '<p>%s%s</p>%s',
+            $words,
+            "&hellip;",
+            "<a class='post-text__more-link' href='#'>Читать далее</a>"
+        );
     }
 }
 
@@ -53,7 +58,7 @@ function getDateDiff(string $postCreatedDate): string
     // https://www.php.net/manual/ru/function.floor.php -- echo floor(9.999); // 9
     $weeks = floor($days / 7);
     $hours = $dateDifference->h;// Количество часов int
-    $minutes = $dateDifference ->i;// Количество минут int
+    $minutes = $dateDifference->i;// Количество минут int
     $date = ''; //возвращаемое значение
 
     // определяет, в какой из диапазонов она попадает, начиная от большого к меньшему
@@ -74,6 +79,63 @@ function getDateDiff(string $postCreatedDate): string
     }
     return $date;
 }
+// В сценарии главной страницы выполните подключение к MySQL.
+
+/**
+ * @return mysqli
+ */
+function getConnection(): mysqli
+{
+    define('DB_HOST', 'mysql');
+    define('DB_USER', 'readme');
+    define('DB_PASSWORD', 'secret');
+    define('DB_NAME', 'readmedb');
+
+    $dbConnection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    if (mysqli_connect_error()) {
+        echo mysqli_connect_error();
+        exit;
+    }
+    return $dbConnection;
+}
+
+/**
+ * @param mysqli $dbConnection
+ * @return array
+ */
+function getContentTypes(mysqli $dbConnection): array
+{
+    $sqlQuerySelect = "SELECT * FROM content_type";
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+    return mysqli_fetch_all($sqlQueryResult, MYSQLI_ASSOC);
+}
+
+/**
+ * @param mysqli $dbConnection
+ * @return array
+ */
+function getPosts(mysqli $dbConnection): array
+{
+    $sqlQuerySelect = "SELECT * FROM post
+        INNER JOIN user ON post.user_id = user.id
+        INNER JOIN content_type ON post.content_type_id = content_type.id
+        ORDER BY  views_number DESC";
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+    return mysqli_fetch_all($sqlQueryResult, MYSQLI_ASSOC);
+}
+
+
+
+
 
 
 
