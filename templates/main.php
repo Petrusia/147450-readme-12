@@ -1,3 +1,7 @@
+<?php
+// 2. В сценарий этой странице добавьте условие на проверку существования параметра запроса
+// и получение его значения.
+$typeIdFromQuery = intval($_GET['type_id'] ?? 0) ?>
 <div class="container">
     <h1 class="page__title page__title--popular">Популярное</h1>
 </div>
@@ -36,7 +40,9 @@
             <b class="popular__filters-caption filters__caption">Тип контента:</b>
             <ul class="popular__filters-list filters__list">
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <a class="filters__button filters__button--ellipse filters__button--all filters__button--active"
+                    <!--Если параметр запроса с типом контента существует, то необходимо для соответствующей ссылки из списка ul.popular__filters-list
+                    добавить класс filters__button--active. -->
+                    <a class="filters__button filters__button--ellipse filters__button--all <?= $typeIdFromQuery === 0 ? 'filters__button--active' : ''; ?>"
                        href="/">
                         <span>Все</span>
                     </a>
@@ -45,9 +51,12 @@
                 <?php
                 foreach ($contentTypes as $type): ?>
                     <li class="popular__filters-item filters__item">
-                        <!--1. Добавьте ссылкам внутри тега ul.popular__filters-list адрес, -->
-                        <!--ведущий на эту страницу с параметром запроса, в котором будет значение ID каждого из доступных типов контента.-->
-                        <a class="filters__button filters__button--<?= $type['type'] ?> button"
+                        <!--1. Добавьте ссылкам внутри тега ul.popular__filters-list адрес,
+                        ведущий на эту страницу с параметром запроса, в котором будет значение ID каждого из доступных типов контента.-->
+                        <!--3. Если параметр запроса с типом контента существует, то необходимо для соответствующей ссылки из списка ul.popular__filters-list
+                        добавить класс filters__button--active. -->
+                        <a class="filters__button filters__button--<?= $type['type'] ?>
+                            <?= $typeIdFromQuery == $type['id'] ? 'filters__button--active' : ''; ?>"
                            href="?type_id=<?= $type['id'] ?>">
                             <span class="visually-hidden"><?= $type['name'] ?></span>
                             <svg class="filters__icon" width="22" height="18">

@@ -79,6 +79,7 @@ function getDateDiff(string $postCreatedDate): string
     }
     return $date;
 }
+
 // В сценарии главной страницы выполните подключение к MySQL.
 
 /**
@@ -132,10 +133,3 @@ function getPosts(mysqli $dbConnection): array
     }
     return mysqli_fetch_all($sqlQueryResult, MYSQLI_ASSOC);
 }
-
-
-
-
-
-
-
