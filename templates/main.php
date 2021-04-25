@@ -1,7 +1,4 @@
-<?php
-// 2. В сценарий этой странице добавьте условие на проверку существования параметра запроса
-// и получение его значения.
-$typeIdFromQuery = intval($_GET['type_id'] ?? 0) ?>
+
 <div class="container">
     <h1 class="page__title page__title--popular">Популярное</h1>
 </div>
@@ -40,9 +37,8 @@ $typeIdFromQuery = intval($_GET['type_id'] ?? 0) ?>
             <b class="popular__filters-caption filters__caption">Тип контента:</b>
             <ul class="popular__filters-list filters__list">
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <!--Если параметр запроса с типом контента существует, то необходимо для соответствующей ссылки из списка ul.popular__filters-list
-                    добавить класс filters__button--active. -->
-                    <a class="filters__button filters__button--ellipse filters__button--all <?= $typeIdFromQuery === 0 ? 'filters__button--active' : ''; ?>"
+                    <!--Если параметра запроса не указано, то классом filters__button--active надо отметить ссылку «Все». -->
+                    <a class="filters__button filters__button--ellipse filters__button--all <?= isFiltersButtonActive($typeIdFromQuery) ?>"
                        href="/">
                         <span>Все</span>
                     </a>
@@ -56,7 +52,7 @@ $typeIdFromQuery = intval($_GET['type_id'] ?? 0) ?>
                         <!--3. Если параметр запроса с типом контента существует, то необходимо для соответствующей ссылки из списка ul.popular__filters-list
                         добавить класс filters__button--active. -->
                         <a class="filters__button filters__button--<?= $type['type'] ?>
-                            <?= $typeIdFromQuery == $type['id'] ? 'filters__button--active' : ''; ?>"
+                            <?= isFiltersButtonActive($typeIdFromQuery, $type['id']) ?>"
                            href="?type_id=<?= $type['id'] ?>">
                             <span class="visually-hidden"><?= $type['name'] ?></span>
                             <svg class="filters__icon" width="22" height="18">
