@@ -1,4 +1,3 @@
-
 <div class="container">
     <h1 class="page__title page__title--popular">Популярное</h1>
 </div>
@@ -8,7 +7,7 @@
             <b class="popular__sorting-caption sorting__caption">Сортировка:</b>
             <ul class="popular__sorting-list sorting__list">
                 <li class="sorting__item sorting__item--popular">
-                    <a class="sorting__link sorting__link--active" href="#">
+                    <a class="sorting__link sorting__link--active" href="?sort_by=popularity">
                         <span>Популярность</span>
                         <svg class="sorting__icon" width="10" height="12">
                             <use xlink:href="#icon-sort"></use>
@@ -38,7 +37,9 @@
             <ul class="popular__filters-list filters__list">
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
                     <!--Если параметра запроса не указано, то классом filters__button--active надо отметить ссылку «Все». -->
-                    <a class="filters__button filters__button--ellipse filters__button--all <?= isFiltersButtonActive($typeIdFromQuery) ?>"
+                    <a class="filters__button filters__button--ellipse filters__button--all <?= isFiltersButtonActive(
+                        $typeIdFromQuery
+                    ) ?>"
                        href="/">
                         <span>Все</span>
                     </a>
@@ -68,9 +69,11 @@
     <div class="popular__posts">
         <?php
         foreach ($posts as $postId => $post): ?>
-            <article class="popular__post post post-<?= $post['type']; ?>">
+            <article class="popular__post post post-<?= $post['type'] ?>">
                 <header class="post__header">
-                    <h2><?= $post['title']; ?></h2>
+                    <!-- Добавьте внутри заголовка каждой карточки постов ссылку на сценарий post.php
+                    вместе с параметром запроса. В параметре запроса будет ID этого поста.-->
+                    <h2><a href="/post.php?post_id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h2>
                 </header>
                 <div class="post__main">
                     <!--содержимое для поста-цитаты-->
