@@ -7,7 +7,7 @@
             <b class="popular__sorting-caption sorting__caption">Сортировка:</b>
             <ul class="popular__sorting-list sorting__list">
                 <li class="sorting__item sorting__item--popular">
-                    <a class="sorting__link sorting__link--active" href="#">
+                    <a class="sorting__link sorting__link--active" href="?sort_by=popularity">
                         <span>Популярность</span>
                         <svg class="sorting__icon" width="10" height="12">
                             <use xlink:href="#icon-sort"></use>
@@ -36,8 +36,11 @@
             <b class="popular__filters-caption filters__caption">Тип контента:</b>
             <ul class="popular__filters-list filters__list">
                 <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                    <a class="filters__button filters__button--ellipse filters__button--all filters__button--active"
-                       href="#">
+                    <!--Если параметра запроса не указано, то классом filters__button--active надо отметить ссылку «Все». -->
+                    <a class="filters__button filters__button--ellipse filters__button--all <?= isFiltersButtonActive(
+                        $typeIdFromQuery
+                    ) ?>"
+                       href="/">
                         <span>Все</span>
                     </a>
                 </li>
@@ -45,7 +48,13 @@
                 <?php
                 foreach ($contentTypes as $type): ?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--<?= $type['type'] ?> button" href="#">
+                        <!--1. Добавьте ссылкам внутри тега ul.popular__filters-list адрес,
+                        ведущий на эту страницу с параметром запроса, в котором будет значение ID каждого из доступных типов контента.-->
+                        <!--3. Если параметр запроса с типом контента существует, то необходимо для соответствующей ссылки из списка ul.popular__filters-list
+                        добавить класс filters__button--active. -->
+                        <a class="filters__button filters__button--<?= $type['type'] ?>
+                            <?= isFiltersButtonActive($typeIdFromQuery, $type['id']) ?>"
+                           href="?type_id=<?= $type['id'] ?>">
                             <span class="visually-hidden"><?= $type['name'] ?></span>
                             <svg class="filters__icon" width="22" height="18">
                                 <use xlink:href="#icon-filter-<?= $type['type'] ?>"></use>
@@ -60,9 +69,11 @@
     <div class="popular__posts">
         <?php
         foreach ($posts as $postId => $post): ?>
-            <article class="popular__post post post-<?= $post['type']; ?>">
+            <article class="popular__post post post-<?= $post['type'] ?>">
                 <header class="post__header">
-                    <h2><?= $post['title']; ?></h2>
+                    <!-- Добавьте внутри заголовка каждой карточки постов ссылку на сценарий post.php
+                    вместе с параметром запроса. В параметре запроса будет ID этого поста.-->
+                    <h2><a href="/post.php?post_id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h2>
                 </header>
                 <div class="post__main">
                     <!--содержимое для поста-цитаты-->

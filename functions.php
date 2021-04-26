@@ -79,6 +79,7 @@ function getDateDiff(string $postCreatedDate): string
     }
     return $date;
 }
+
 // В сценарии главной страницы выполните подключение к MySQL.
 
 /**
@@ -119,12 +120,17 @@ function getContentTypes(mysqli $dbConnection): array
  * @param mysqli $dbConnection
  * @return array
  */
-function getPosts(mysqli $dbConnection): array
+function getPosts(mysqli $dbConnection, $typeIdFromQuery = 0): array
 {
     $sqlQuerySelect = "SELECT * FROM post
         INNER JOIN user ON post.user_id = user.id
-        INNER JOIN content_type ON post.content_type_id = content_type.id
-        ORDER BY  views_number DESC";
+        INNER JOIN content_type ON post.content_type_id = content_type.id ";
+
+    if ($typeIdFromQuery) {
+        $sqlQuerySelect .= " WHERE content_type.id = $typeIdFromQuery ";
+    }
+    $sqlQuerySelect .= " ORDER BY views_number DESC; ";
+
     $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
 
     if (!$sqlQueryResult) {
@@ -134,8 +140,10 @@ function getPosts(mysqli $dbConnection): array
 }
 
 
-
-
-
-
-
+function isFiltersButtonActive(int $typeIdFromQuery, int $typeId = 0): string
+{
+    if ($typeIdFromQuery === $typeId) {
+        return 'filters__button--active';
+    }
+    return ' ';
+}
