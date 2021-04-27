@@ -113,7 +113,7 @@
                                 endforeach; ?>
                             <?php
                             else: ?>
-                                <p class="comments__text" style="text-align: center">
+                                <p class="comments__text" style="text-align: center; padding-top: 35px; color: #8798ad;">
                                     <?= $comments ?>
                                 </p>
                             <?php
