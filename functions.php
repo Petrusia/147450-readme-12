@@ -122,7 +122,22 @@ function getContentTypes(mysqli $dbConnection): array
  */
 function getPosts(mysqli $dbConnection, $typeIdFromQuery = 0): array
 {
-    $sqlQuerySelect = "SELECT * FROM post
+    $sqlQuerySelect = "SELECT
+     post.id,
+     post.created_at,
+     post.title,
+     post.description,
+     post.quote_author,
+     post.image_url,
+     post.video_url,
+     post.link_url,
+     post.views_number,
+     post.user_id,
+     post.content_type_id,
+    user.avatar,
+    content_type.type
+
+    FROM post
         INNER JOIN user ON post.user_id = user.id
         INNER JOIN content_type ON post.content_type_id = content_type.id ";
 
@@ -139,6 +154,40 @@ function getPosts(mysqli $dbConnection, $typeIdFromQuery = 0): array
     return mysqli_fetch_all($sqlQueryResult, MYSQLI_ASSOC);
 }
 
+/**
+ * @param mysqli $dbConnection
+ * @return array
+ */
+function getPost(mysqli $dbConnection, int $postIdFromQuery): array
+{
+    $sqlQuerySelect = "SELECT
+     post.id,
+     post.created_at,
+     post.title,
+     post.description,
+     post.quote_author,
+     post.image_url,
+     post.video_url,
+     post.link_url,
+     post.views_number,
+     post.user_id,
+     post.content_type_id,
+     user.avatar,
+     user.login,
+    user.created_at AS registered_at,
+     content_type.type FROM post
+        INNER JOIN user ON post.user_id = user.id
+        INNER JOIN content_type ON post.content_type_id = content_type.id
+        WHERE post.id = $postIdFromQuery";
+
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+    return mysqli_fetch_assoc($sqlQueryResult);
+}
+
 
 function isFiltersButtonActive(int $typeIdFromQuery, int $typeId = 0): string
 {
@@ -146,4 +195,81 @@ function isFiltersButtonActive(int $typeIdFromQuery, int $typeId = 0): string
         return 'filters__button--active';
     }
     return ' ';
+}
+
+function getNumberOfSubscribers(mysqli $dbConnection, $userId, bool $isNumber = true): string
+{
+    $sqlQuerySelect = "SELECT COUNT(*) as count FROM subscription WHERE user_id = $userId";
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+    $queryResult = mysqli_fetch_assoc($sqlQueryResult);
+
+    if ($isNumber) {
+        return $queryResult['count'];
+    }
+    return get_noun_plural_form($queryResult['count'], ' подписчик', ' подписчика', ' подписчиков');
+}
+
+function getNumberOfPublications(mysqli $dbConnection, $userId, bool $isNumber = true): string
+{
+    $sqlQuerySelect = "SELECT COUNT(*) as count FROM post WHERE user_id = $userId";
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+    $queryResult = mysqli_fetch_assoc($sqlQueryResult);
+
+    if ($isNumber) {
+        return $queryResult['count'];
+    }
+    return get_noun_plural_form($queryResult['count'], ' публикация', ' публикации', ' публикаций');
+}
+
+function getViewsOfPublication($viewsNumber): string
+{
+    $viewsNumber = (int)$viewsNumber;
+    $text = get_noun_plural_form($viewsNumber, ' просмотр', ' просмотра', ' просмотров');
+    return $viewsNumber . ' ' . $text;
+}
+
+function getComments(mysqli $dbConnection,  $postId): array
+{
+    $sqlQuerySelect = "SELECT
+       comment.comment_date,
+       comment.content,
+       user.login,
+       user.avatar
+       FROM comment
+       INNER JOIN user ON comment.user_id = user.id
+    WHERE comment.post_id =  $postId  ORDER BY comment.comment_date DESC";
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+
+    return mysqli_fetch_all($sqlQueryResult, MYSQLI_ASSOC) ;
+}
+
+function getNumberOfComments(mysqli $dbConnection,  $postId): int
+{
+    $sqlQuerySelect = "SELECT COUNT(*) as count FROM comment WHERE post_id = $postId";
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+    $queryResult = mysqli_fetch_assoc($sqlQueryResult);
+    return (int) $queryResult['count'];
+}
+
+function getNumberOfLikes(mysqli $dbConnection,  $postId): int
+{
+    $sqlQuerySelect = "SELECT COUNT(*) as count FROM user_post_like_relation WHERE post_id = $postId";
+    $sqlQueryResult = mysqli_query($dbConnection, $sqlQuerySelect);
+    if (!$sqlQueryResult) {
+        echo mysqli_error($dbConnection);
+    }
+    $queryResult = mysqli_fetch_assoc($sqlQueryResult);
+    return (int) $queryResult['count'];
 }

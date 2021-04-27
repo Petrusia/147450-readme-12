@@ -10,24 +10,27 @@ require_once(__DIR__ . '/functions.php');
 // 2. В сценарий этой странице добавьте условие на проверку существования параметра запроса
 // и получение его значения.
 $typeIdFromQuery = intval($_GET['type_id'] ?? 0);
-// 3. Проверяйте существование параметра запроса с id поста.
-$postIdFromQuery = intval($_GET['post_id'] ?? 0);
+
 // В сценарии главной страницы выполните подключение к MySQL.
 $db = getConnection();
 // Отправьте SQL-запрос для получения типов контента.
 $contentTypes = getContentTypes($db);
+
 // Отправьте SQL-запрос для получения списка постов,
 // объединенных с пользователями и отсортированный по популярности.
 $posts = getPosts($db, $typeIdFromQuery);
+
 // Используйте эти данные для показа списка постов
 // и списка типов контента на главной странице.
-
 $mainTemplate = include_template(
     'main.php',
     [
         'contentTypes' => $contentTypes,
         'posts' => $posts,
+        'post' => $post,
         'typeIdFromQuery' => $typeIdFromQuery,
+        'postIdFromQuery' => $postIdFromQuery,
+        'db' => $db
     ]
 );
 

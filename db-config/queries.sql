@@ -67,6 +67,18 @@ WHERE comment.post_id = 1;
 
 -- 4. добавить лайк к посту;
 INSERT INTO user_post_like_relation SET user_id=1, post_id=1;
+INSERT INTO user_post_like_relation SET user_id=2, post_id=1;
+INSERT INTO user_post_like_relation SET user_id=3, post_id=1;
+INSERT INTO user_post_like_relation SET user_id=1, post_id=2;
+INSERT INTO user_post_like_relation SET user_id=2, post_id=3;
+INSERT INTO user_post_like_relation SET user_id=3, post_id=4;
+INSERT INTO user_post_like_relation SET user_id=3, post_id=5;
+INSERT INTO user_post_like_relation SET user_id=3, post_id=6;
+INSERT INTO user_post_like_relation SET user_id=3, post_id=2;
 
 -- 5. подписаться на пользователя.
 INSERT INTO subscription SET follower_id=1, user_id=2;
+INSERT INTO subscription SET follower_id=2, user_id=1;
+INSERT INTO subscription SET follower_id=2, user_id=3;
+INSERT INTO subscription SET follower_id=3, user_id=1;
+INSERT INTO subscription SET follower_id=3, user_id=2;
